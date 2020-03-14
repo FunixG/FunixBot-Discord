@@ -64,9 +64,9 @@ function getTwitchData(cb) {
     const res = http.request(optionsLive, function (fetch) {
         fetch.setEncoding('utf8');
         fetch.on('data', function (data) {
-            if (data.length > 0 && isStreaming) return;
-            if (data.length > 0 && !isStreaming) {
-                data = JSON.parse(data);
+            data = JSON.parse(data);
+            if (data.data.length > 0 && isStreaming) return;
+            if (data.data.length > 0 && !isStreaming) {
                 isStreaming = true;
                 dataTwitch.title = data.data[0].title;
                 gameid = data.data[0].game_id;
