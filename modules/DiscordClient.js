@@ -69,7 +69,7 @@ class DiscordClient {
                 guildMember.guild.channels.cache.get(config.defaults.channelsId.log).send("<@&" + config.defaults.groupsId.Admin + "> :warning: Compte créé il y a moins de 10 minutes ! " + guildMember.user.tag);
         }
         guildMember.guild.channels.cache.get(config.defaults.channelsId.log).send(messageEmbed);
-        guildMember.roles.add(config.defaults.groupsId.Joueur).catch(console.error);
+        guildMember.roles.add(config.defaults.groupsId.Follower).catch(console.error);
     }
 
     removeGuildUser(guildMember) {
