@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Main-Class: fr.funixgaming.bot.Main
+Class-Path: slf4j-jdk14-1.5.6.jar jackson-annotations-2.10.1.jar okio-1.
+ 17.2.jar opus-java-natives-1.0.4.jar jna-4.4.0.jar jackson-core-2.10.1.
+ jar annotations-16.0.1.jar gson-2.8.6.jar opus-java-api-1.0.4.jar jsr30
+ 5-3.0.2.jar jackson-databind-2.10.1.jar nv-websocket-client-2.9.jar tro
+ ve4j-3.0.3.jar JDA-4.1.1_154.jar okhttp-3.13.0.jar commons-collections4
+ -4.1.jar slf4j-api-1.5.6.jar
+
