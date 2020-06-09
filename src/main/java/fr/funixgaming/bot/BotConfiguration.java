@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class BotConfiguration {
@@ -49,7 +50,12 @@ public class BotConfiguration {
         fw.close();
     }
 
-    public static BotConfiguration getConfiguration() throws IOException {
+    public static void removeConfigFile() {
+        File configFile = new File(filePath);
+        configFile.delete();
+    }
+
+    public static BotConfiguration getConfiguration() throws IOException, NoSuchElementException {
         File configFile = new File(filePath);
 
         if (!configFile.exists()) {
