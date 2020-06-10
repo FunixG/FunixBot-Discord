@@ -2,5 +2,5 @@
 logs/
 target/
 data/
-.env.json
+data/configuration.json
 funixbot-discord.iml

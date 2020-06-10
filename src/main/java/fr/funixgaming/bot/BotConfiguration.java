@@ -11,7 +11,8 @@ import java.util.Scanner;
 public class BotConfiguration {
 
     private static final String configVersion = "1.0";
-    private static final String filePath = ".env.json";
+    private static final File dataFolder = new File("data");
+    private static final File configFile = new File(dataFolder, "configuration.json");
 
     public String discordToken;
     public String bienvenueID;
@@ -37,12 +38,13 @@ public class BotConfiguration {
     }
 
     public void saveConfig() throws IOException {
-        File configFile = new File(filePath);
         Gson gson = new Gson();
 
+        if (!dataFolder.exists() && !dataFolder.mkdir())
+            throw new IOException("Error while creating data folder");
         if (!configFile.exists()) {
             if (!configFile.createNewFile())
-                throw new IOException("Erreur lors de la création de .env.json");
+                throw new IOException("Erreur lors de la création de configuration.json");
         }
         String objString = gson.toJson(this);
         FileWriter fw = new FileWriter(configFile.getAbsoluteFile(), false);
@@ -51,13 +53,12 @@ public class BotConfiguration {
     }
 
     public static void removeConfigFile() {
-        File configFile = new File(filePath);
         configFile.delete();
     }
 
     public static BotConfiguration getConfiguration() throws IOException, NoSuchElementException {
-        File configFile = new File(filePath);
-
+        if (!dataFolder.exists() && !dataFolder.mkdir())
+            throw new IOException("Error while creating data folder");
         if (!configFile.exists()) {
             System.out.println(ConsoleColors.YELLOW_BOLD + "La configuration du bot n'existe pas. Veuillez configurer le bot.");
             BotConfiguration config = new BotConfiguration(true);

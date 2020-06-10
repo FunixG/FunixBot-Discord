@@ -1,10 +1,13 @@
 package fr.funixgaming.bot;
 
+import fr.funixgaming.bot.Events.UserJoinLeave;
 import fr.funixgaming.bot.Events.UserMessage;
 import fr.funixgaming.bot.Utils.ConsoleColors;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
@@ -15,23 +18,21 @@ public class Bot {
     private JDA api;
     private final BotConfiguration botConfiguration;
 
-    private Bot(BotConfiguration botConfiguration) throws LoginException {
+    private Bot(BotConfiguration botConfiguration) throws LoginException, InterruptedException {
         this.botConfiguration = botConfiguration;
         setupBot();
-        setupEvents();
     }
 
-    private void setupBot() throws LoginException {
+    private void setupBot() throws LoginException, InterruptedException {
         JDABuilder builder = JDABuilder.createDefault(botConfiguration.discordToken);
-        builder.setActivity(Activity.of(Activity.ActivityType.STREAMING, "twitch.tv/funixgaming", "https://twitch.tv/funixgaming"));
-        this.api = builder.build();
-    }
-
-    private void setupEvents() {
-        this.api.addEventListener(new UserMessage());
+        builder.enableIntents(GatewayIntent.GUILD_MEMBERS);
+        builder.setActivity(Activity.of(Activity.ActivityType.WATCHING, "twitch.tv/funixgaming", "https://twitch.tv/funixgaming"));
+        builder.addEventListeners(new UserMessage(), new UserJoinLeave());
+        this.api = builder.build().awaitReady();
     }
 
     public JDA getApi() { return this.api; }
+    public BotConfiguration getConfig() { return this.botConfiguration; }
 
     public static Bot initBot() {
         Bot bot;
@@ -39,7 +40,7 @@ public class Bot {
             BotConfiguration botConfig = BotConfiguration.getConfiguration();
             bot = new Bot(botConfig);
             return bot;
-        } catch (IOException | LoginException | NoSuchElementException e) {
+        } catch (IOException | LoginException | NoSuchElementException | InterruptedException e) {
             System.err.println(ConsoleColors.RED + e.getMessage());
             BotConfiguration.removeConfigFile();
             return null;
