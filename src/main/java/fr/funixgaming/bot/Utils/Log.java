@@ -16,7 +16,7 @@ public class Log {
 
     private static final File logFolder = new File("data", "logs");
 
-    public static void logMessage(User user, TextChannel textChannel, Message message) {
+    public static void logMessage(User user, TextChannel textChannel, String message) {
         new Thread(() -> {
             DateFormat dateFormat = new SimpleDateFormat("d.MM.yyyy");
             DateFormat timeFormat = new SimpleDateFormat("HH:mm");
@@ -34,7 +34,7 @@ public class Log {
                 if (!logFile.exists() && !logFile.createNewFile())
                     throw new IOException("Could not create file");
                 BufferedWriter fileWriter = new BufferedWriter(new FileWriter(logFile, true));
-                String log = time + " > " + user.getAsTag() + " [" + textChannel.getName() + "] " + message.getContentRaw() + "\n";
+                String log = time + " > " + user.getAsTag() + " [" + textChannel.getName() + "] " + message + "\n";
                 System.out.print(log);
                 fileWriter.write(log);
                 fileWriter.close();

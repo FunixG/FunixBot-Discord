@@ -28,7 +28,7 @@ public class UserJoinLeave extends ListenerAdapter {
         EmbedBuilder embedBuilder = new EmbedBuilder();
         embedBuilder.setTitle("Bienvenue !");
         embedBuilder.setColor(new Color(67, 170, 139));
-        embedBuilder.setDescription("Nouveau membre: " + user.getName());
+        embedBuilder.addField(":tada: Nouveau membre ! :tada:", user.getName(), false);
         embedBuilder.setAuthor(user.getAsTag(), null, user.getAvatarUrl());
         embedBuilder.setThumbnail(user.getAvatarUrl());
 
@@ -37,9 +37,16 @@ public class UserJoinLeave extends ListenerAdapter {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("d/MM/yyyy HH:mm");
         embedBuilder.addField("Date de création", dateTimeFormatter.format(creationDate), false);
 
-        if (nowTime - creationDateTime <= 172800) {
+        long diff = nowTime - creationDateTime;
+        if (diff <= 172800) {
             embedBuilder.addField(":warning: Attention :warning:", "Compte créé il y a moins de 2 jours !", false);
             embedBuilder.setColor(Color.orange);
+            if (diff <= 600) {
+                BotActions.sendMessageToChannel(
+                        "<@&" + Main.bot.getConfig().adminID + "> :warning: Compte créé il y a moins de 10 minutes ! " + user.getAsTag(),
+                        Main.bot.getConfig().logID
+                );
+            }
         }
 
         BotActions.sendMessageToChannel(embedBuilder.build(), Main.bot.getConfig().logID);

@@ -18,6 +18,7 @@ public class BotConfiguration {
     public String bienvenueID;
     public String logID;
     public String followerID;
+    public String adminID;
 
     public String configVersionSet;
 
@@ -33,6 +34,8 @@ public class BotConfiguration {
         this.logID = scanner.nextLine();
         System.out.println(ConsoleColors.GREEN + "Group id du grade follower: ");
         this.followerID = scanner.nextLine();
+        System.out.println(ConsoleColors.GREEN + "Group id du grade admin: ");
+        this.adminID = scanner.nextLine();
         scanner.close();
         this.configVersionSet = configVersion;
     }
