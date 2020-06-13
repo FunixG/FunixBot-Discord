@@ -1,7 +1,9 @@
 package fr.funixgaming.bot.Modules;
 
 import fr.funixgaming.bot.Main;
+import net.dv8tion.jda.api.EmbedBuilder;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,21 +35,41 @@ abstract class Task {
 
 class NotificationLive extends Task {
 
+    private final String twitchChannelID;
+    private final String botUrlProfileImage;
     private boolean isStreaming;
 
     NotificationLive(Timer timer, int period) {
         super(timer, period);
         this.isStreaming = false;
+        this.twitchChannelID = Main.bot.getConfig().twitchID;
+        this.botUrlProfileImage = Main.bot.getApi().getSelfUser().getAvatarUrl();
     }
 
     void task() {
         try {
             Main.twitchApi.fetchStream();
-            boolean apiStream = Main.twitchApi.isLive;
+            TwitchApi twitchApi = Main.twitchApi;
+            boolean apiStream = twitchApi.isLive;
             if (!isStreaming && apiStream) {
-                System.out.println("STREAM START");
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                embedBuilder.setTitle("FunixGaming est en live !", "https://twitch.tv/funixgaming");
+                embedBuilder.addField("Titre du live :", twitchApi.streamTitle, false);
+                embedBuilder.addField("Jeu :", twitchApi.gameName, false);
+                embedBuilder.addField("Lien :", "https://twitch.tv/funixgaming", false);
+                embedBuilder.setThumbnail(twitchApi.gameJacket);
+                embedBuilder.setColor(new Color(100, 65, 165));
+                embedBuilder.setFooter("FunixLive - Notification de live", botUrlProfileImage);
+                BotActions.sendMessageToChannel("FunixGaming est en live sur Twitch ! @here", twitchChannelID);
+                BotActions.sendMessageToChannel(embedBuilder.build(), twitchChannelID);
             } else if (isStreaming && !apiStream) {
-                System.out.println("STREAM END");
+                EmbedBuilder embedBuilder = new EmbedBuilder();
+                embedBuilder.setTitle("Fin du live.");
+                embedBuilder.setDescription("Merci d'avoir suivi le live !");
+                embedBuilder.addField("Titre du live :", twitchApi.streamTitle, false);
+                embedBuilder.setColor(new Color(100, 65, 165));
+                embedBuilder.setFooter("FunixLive - Notification de live", botUrlProfileImage);
+                BotActions.sendMessageToChannel(embedBuilder.build(), twitchChannelID);
             }
             this.isStreaming = apiStream;
         } catch (IOException e) {

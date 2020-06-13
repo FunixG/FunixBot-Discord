@@ -27,7 +27,7 @@ public class TwitchApi {
 
     private TwitchApi() throws IOException {
         this.apiConfiguration = ApiConfiguration.getConfig();
-        this.bearerToken = BearerToken.getToken(apiConfiguration);
+        this.bearerToken = BearerToken.getToken(this.apiConfiguration);
     }
 
     public void fetchStream() throws IOException {
@@ -150,7 +150,7 @@ class BearerToken {
     }
 
     public boolean isTokenExpired() {
-        long diff = System.currentTimeMillis() - generatedTimestamp;
+        long diff = System.currentTimeMillis() / 1000 - generatedTimestamp / 1000;
         return diff >= expiresIn - 60;
     }
 
@@ -192,7 +192,7 @@ class BearerToken {
                 json.get("access_token").getAsString()
         );
         reader.close();
-        System.out.println(ConsoleColors.YELLOW + "Génération d'un nouveau token bearer.");
+        System.out.println(ConsoleColors.YELLOW + "Génération d'un nouveau token bearer." + ConsoleColors.WHITE);
         return bearerToken;
     }
 }

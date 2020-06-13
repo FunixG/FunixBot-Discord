@@ -18,6 +18,7 @@ public class BotConfiguration {
     public String discordToken;
     public String bienvenueID;
     public String logID;
+    public String twitchID;
     public String followerID;
     public String adminID;
 
@@ -33,6 +34,8 @@ public class BotConfiguration {
         this.bienvenueID = scanner.nextLine();
         System.out.println(ConsoleColors.GREEN + "Channel id de log: ");
         this.logID = scanner.nextLine();
+        System.out.println(ConsoleColors.GREEN + "Channel id de twitch: ");
+        this.twitchID = scanner.nextLine();
         System.out.println(ConsoleColors.GREEN + "Group id du grade follower: ");
         this.followerID = scanner.nextLine();
         System.out.println(ConsoleColors.GREEN + "Group id du grade admin: " + ConsoleColors.WHITE);

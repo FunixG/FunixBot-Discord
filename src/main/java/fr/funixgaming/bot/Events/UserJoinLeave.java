@@ -3,6 +3,9 @@ package fr.funixgaming.bot.Events;
 import fr.funixgaming.bot.Main;
 import fr.funixgaming.bot.Modules.BotActions;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.guild.GuildBanEvent;
 import net.dv8tion.jda.api.events.guild.GuildUnbanEvent;
@@ -21,6 +24,8 @@ public class UserJoinLeave extends ListenerAdapter {
     @Override
     public void onGuildMemberJoin(@Nonnull GuildMemberJoinEvent event) {
         User user = event.getUser();
+        Member member = event.getMember();
+        Guild guild = event.getGuild();
         OffsetDateTime creationDate = user.getTimeCreated();
         long nowTime = new Date().getTime() / 1000;
         long creationDateTime = creationDate.toInstant().getEpochSecond();
@@ -48,6 +53,10 @@ public class UserJoinLeave extends ListenerAdapter {
                 );
             }
         }
+
+        Role role = guild.getRoleById(Main.bot.getConfig().followerID);
+        if (role != null)
+            guild.addRoleToMember(event.getMember(), role).queue();
 
         BotActions.sendMessageToChannel(embedBuilder.build(), Main.bot.getConfig().logID);
         System.out.println(user.getAsTag() + " à rejoint le discord.");
