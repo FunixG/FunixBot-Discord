@@ -1,6 +1,7 @@
 package fr.funixgaming.bot.Modules;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import fr.funixgaming.bot.Utils.ConsoleColors;
 import fr.funixgaming.bot.Utils.FileActions;
@@ -45,8 +46,8 @@ public class TwitchApi {
 
         InputStreamReader reader = new InputStreamReader(http.getInputStream());
         JsonObject json = gson.fromJson(reader, JsonObject.class);
-        JsonObject streamData = json.get("data").getAsJsonArray().get(0).getAsJsonObject();
-        if (streamData.size() < 1) {
+        JsonArray jsonArray = json.get("data").getAsJsonArray();
+        if (jsonArray.size() < 1) {
             this.isLive = false;
             this.gameJacket = null;
             this.gameName = null;
@@ -54,6 +55,7 @@ public class TwitchApi {
             this.streamTitle = null;
             return;
         }
+        JsonObject streamData = jsonArray.get(0).getAsJsonObject();
         this.isLive = true;
         this.nbViewers = streamData.get("viewer_count").getAsInt();
         this.streamTitle = streamData.get("title").getAsString();
