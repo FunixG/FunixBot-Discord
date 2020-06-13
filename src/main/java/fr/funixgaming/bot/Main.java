@@ -1,5 +1,6 @@
 package fr.funixgaming.bot;
 
+import fr.funixgaming.bot.Modules.ScheduledTasks;
 import fr.funixgaming.bot.Modules.TwitchApi;
 import fr.funixgaming.bot.Utils.ConsoleCommands;
 
@@ -14,7 +15,7 @@ public class Main {
     public static void main(String[] args) {
         twitchApi = TwitchApi.init();
         bot = Bot.initBot();
+        ScheduledTasks.init();
         ConsoleCommands.setupConsole(bot);
-
     }
 }
