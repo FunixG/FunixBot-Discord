@@ -1,6 +1,6 @@
 package fr.funixgaming.bot;
 
-import fr.funixgaming.bot.Utils.BotConfiguration;
+import fr.funixgaming.bot.Modules.BotConfiguration;
 import fr.funixgaming.bot.Events.UserJoinLeave;
 import fr.funixgaming.bot.Events.UserMessage;
 import fr.funixgaming.bot.Utils.ConsoleColors;

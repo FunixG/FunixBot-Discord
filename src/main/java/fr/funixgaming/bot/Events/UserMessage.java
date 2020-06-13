@@ -1,6 +1,6 @@
 package fr.funixgaming.bot.Events;
 
-import fr.funixgaming.bot.Utils.Log;
+import fr.funixgaming.bot.Modules.Log;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;

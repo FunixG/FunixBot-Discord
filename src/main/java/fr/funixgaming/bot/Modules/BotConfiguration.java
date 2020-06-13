@@ -1,6 +1,8 @@
-package fr.funixgaming.bot.Utils;
+package fr.funixgaming.bot.Modules;
 
 import com.google.gson.Gson;
+import fr.funixgaming.bot.Utils.ConsoleColors;
+import fr.funixgaming.bot.Utils.FileActions;
 
 import java.io.*;
 import java.util.NoSuchElementException;

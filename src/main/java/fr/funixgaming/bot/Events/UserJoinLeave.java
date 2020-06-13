@@ -1,7 +1,7 @@
 package fr.funixgaming.bot.Events;
 
 import fr.funixgaming.bot.Main;
-import fr.funixgaming.bot.Utils.BotActions;
+import fr.funixgaming.bot.Modules.BotActions;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.guild.GuildBanEvent;

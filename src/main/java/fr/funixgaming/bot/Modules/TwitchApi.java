@@ -1,7 +1,9 @@
-package fr.funixgaming.bot.Utils;
+package fr.funixgaming.bot.Modules;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import fr.funixgaming.bot.Utils.ConsoleColors;
+import fr.funixgaming.bot.Utils.FileActions;
 
 import java.io.File;
 import java.io.IOException;

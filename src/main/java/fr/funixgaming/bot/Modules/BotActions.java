@@ -1,4 +1,4 @@
-package fr.funixgaming.bot.Utils;
+package fr.funixgaming.bot.Modules;
 
 import fr.funixgaming.bot.Main;
 import net.dv8tion.jda.api.entities.Guild;

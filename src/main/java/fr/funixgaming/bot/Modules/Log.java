@@ -1,5 +1,6 @@
-package fr.funixgaming.bot.Utils;
+package fr.funixgaming.bot.Modules;
 
+import fr.funixgaming.bot.Utils.FileActions;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
 

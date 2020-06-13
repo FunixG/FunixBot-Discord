@@ -1,6 +1,6 @@
 package fr.funixgaming.bot;
 
-import fr.funixgaming.bot.Utils.TwitchApi;
+import fr.funixgaming.bot.Modules.TwitchApi;
 import fr.funixgaming.bot.Utils.ConsoleCommands;
 
 import java.io.File;
@@ -15,5 +15,6 @@ public class Main {
         twitchApi = TwitchApi.init();
         bot = Bot.initBot();
         ConsoleCommands.setupConsole(bot);
+
     }
 }
