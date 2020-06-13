@@ -1,18 +1,17 @@
-package fr.funixgaming.bot;
+package fr.funixgaming.bot.Utils;
 
-import fr.funixgaming.bot.Utils.ConsoleColors;
 import com.google.gson.Gson;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+
+import static fr.funixgaming.bot.Main.dataFolder;
 
 public class BotConfiguration {
 
     private static final String configVersion = "1.0";
-    private static final File dataFolder = new File("data");
-    private static final File configFile = new File(dataFolder, "configuration.json");
+    private static final File configFile = new File(dataFolder, "botConfiguration.json");
 
     public String discordToken;
     public String bienvenueID;
@@ -34,9 +33,8 @@ public class BotConfiguration {
         this.logID = scanner.nextLine();
         System.out.println(ConsoleColors.GREEN + "Group id du grade follower: ");
         this.followerID = scanner.nextLine();
-        System.out.println(ConsoleColors.GREEN + "Group id du grade admin: ");
+        System.out.println(ConsoleColors.GREEN + "Group id du grade admin: " + ConsoleColors.WHITE);
         this.adminID = scanner.nextLine();
-        scanner.close();
         this.configVersionSet = configVersion;
     }
 
@@ -47,12 +45,10 @@ public class BotConfiguration {
             throw new IOException("Error while creating data folder");
         if (!configFile.exists()) {
             if (!configFile.createNewFile())
-                throw new IOException("Erreur lors de la création de configuration.json");
+                throw new IOException("Erreur lors de la création de botConfiguration.json");
         }
         String objString = gson.toJson(this);
-        FileWriter fw = new FileWriter(configFile.getAbsoluteFile(), false);
-        fw.write(objString);
-        fw.close();
+        FileActions.writeInFile(configFile, objString, false);
     }
 
     public static void removeConfigFile() {
@@ -63,22 +59,16 @@ public class BotConfiguration {
         if (!dataFolder.exists() && !dataFolder.mkdir())
             throw new IOException("Error while creating data folder");
         if (!configFile.exists()) {
-            System.out.println(ConsoleColors.YELLOW_BOLD + "La configuration du bot n'existe pas. Veuillez configurer le bot.");
+            System.out.println(ConsoleColors.YELLOW_BOLD + "La configuration du bot n'existe pas. Veuillez configurer le bot." + ConsoleColors.WHITE);
             BotConfiguration config = new BotConfiguration(true);
             config.saveConfig();
             return config;
         } else {
-            FileInputStream fis = new FileInputStream(configFile);
-            byte[] data = new byte[(int) configFile.length()];
-            if (fis.read(data) == -1)
-                throw new IOException("Erreur lors de la lecture du fichier");
-            fis.close();
-
-            String fileContent = new String(data, StandardCharsets.UTF_8);
+            String fileContent = FileActions.getFileContent(configFile);
             Gson gson = new Gson();
             BotConfiguration config = gson.fromJson(fileContent, BotConfiguration.class);
             if (!config.configVersionSet.equals(configVersion)) {
-                System.out.println(ConsoleColors.YELLOW_BOLD + "La configuration du bot à changé. Veuillez reconfigurer le bot.");
+                System.out.println(ConsoleColors.YELLOW_BOLD + "La configuration du bot à changé. Veuillez reconfigurer le bot." + ConsoleColors.WHITE);
                 config = new BotConfiguration(true);
                 config.saveConfig();
             }

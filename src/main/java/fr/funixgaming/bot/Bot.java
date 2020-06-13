@@ -1,5 +1,6 @@
 package fr.funixgaming.bot;
 
+import fr.funixgaming.bot.Utils.BotConfiguration;
 import fr.funixgaming.bot.Events.UserJoinLeave;
 import fr.funixgaming.bot.Events.UserMessage;
 import fr.funixgaming.bot.Utils.ConsoleColors;
@@ -7,7 +8,6 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import javax.security.auth.login.LoginException;
 import java.io.IOException;
@@ -41,7 +41,9 @@ public class Bot {
             bot = new Bot(botConfig);
             return bot;
         } catch (IOException | LoginException | NoSuchElementException | InterruptedException e) {
+            System.err.println("Une erreur est survenue lors de la connection du bot. Veuillez recommencer.");
             System.err.println(ConsoleColors.RED + e.getMessage());
+            System.exit(84);
             BotConfiguration.removeConfigFile();
             return null;
         }

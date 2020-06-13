@@ -8,16 +8,10 @@ public class ConsoleCommands {
 
     private static boolean RUNNING = true;
 
-    private final Bot bot;
-
-    private ConsoleCommands(Bot bot) {
-        this.bot = bot;
-    }
-
-    private void init() {
+    public static void setupConsole(Bot bot) {
         new Thread(() -> {
+            Scanner scanner = new Scanner(System.in);
             while (RUNNING) {
-                Scanner scanner = new Scanner(System.in);
                 final String userEntry = scanner.nextLine();
                 switch (userEntry) {
                     case "stop":
@@ -31,14 +25,8 @@ public class ConsoleCommands {
         }).start();
     }
 
-    public static void setupConsole(Bot bot) {
-        ConsoleCommands console = new ConsoleCommands(bot);
-        console.init();
-    }
-
     public static void stopConsoleAndBot() {
         RUNNING = false;
         System.exit(0);
     }
-
 }

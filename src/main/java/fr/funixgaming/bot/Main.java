@@ -1,17 +1,19 @@
 package fr.funixgaming.bot;
 
+import fr.funixgaming.bot.Utils.TwitchApi;
 import fr.funixgaming.bot.Utils.ConsoleCommands;
 
+import java.io.File;
+
 public class Main {
+    public static final File dataFolder = new File("data");
 
     public static Bot bot;
+    public static TwitchApi twitchApi;
 
     public static void main(String[] args) {
+        twitchApi = TwitchApi.init();
         bot = Bot.initBot();
-        if (bot == null) {
-            System.err.println("Une erreur est survenue lors de la connection du bot. Veuillez recommencer.");
-            System.exit(84);
-        }
         ConsoleCommands.setupConsole(bot);
     }
 }
