@@ -168,8 +168,10 @@ class BearerToken {
             return bearerToken;
         }
         bearerToken = gson.fromJson(FileActions.getFileContent(bearerFile), BearerToken.class);
-        if (bearerToken.isTokenExpired())
+        if (bearerToken.isTokenExpired()) {
             bearerToken = generateNewToken(configuration);
+            FileActions.writeInFile(bearerFile, gson.toJson(bearerToken), false);
+        }
         return bearerToken;
     }
 
