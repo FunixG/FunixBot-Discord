@@ -1,5 +1,7 @@
 package fr.funixgaming.bot.Events;
 
+import fr.funixgaming.bot.Main;
+import fr.funixgaming.bot.Utils.ConsoleCommands;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.entities.User;
@@ -19,6 +21,11 @@ public class Commands {
         embedBuilder.setColor(new Color(0, 168, 232));
 
         channel.sendMessage(embedBuilder.build()).queue();
+    }
+
+    public static void logs(User user, TextChannel channel, List<String> args) {
+        if (!channel.getId().equals(Main.bot.getConfig().logID)) return;
+        ConsoleCommands.getLogs(args);
     }
 
 }

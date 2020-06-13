@@ -16,6 +16,6 @@ public class Main {
         twitchApi = TwitchApi.init();
         bot = Bot.initBot();
         ScheduledTasks.init();
-        ConsoleCommands.setupConsole(bot);
+        ConsoleCommands.setupConsole();
     }
 }
