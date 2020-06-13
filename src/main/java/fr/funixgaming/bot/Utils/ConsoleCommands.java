@@ -1,10 +1,7 @@
 package fr.funixgaming.bot.Utils;
 
-import fr.funixgaming.bot.Bot;
 import fr.funixgaming.bot.Main;
-import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.TextChannel;
-import net.dv8tion.jda.api.utils.AttachmentOption;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
